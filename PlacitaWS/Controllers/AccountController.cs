@@ -16,9 +16,11 @@ using Microsoft.Owin.Security.OAuth;
 using PlacitaWS.Models;
 using PlacitaWS.Providers;
 using PlacitaWS.Results;
+using System.Web.Http.Cors;
 
 namespace PlacitaWS.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
