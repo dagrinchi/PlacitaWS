@@ -5,20 +5,13 @@ using System.Web;
 
 namespace PlacitaWS.Models
 {
-    public class Order
+    public class GeoPoint
     {
-
         public int Id { get; set; }
 
-        public Stock Stock { get; set; } 
+        public double latitude { get; set; }
 
-        public double Qty { get; set; }
-
-        public double PricePerUnit { get; set; }
-
-        public GeoPoint GeoPoint { get; set; }
-
-        public User User { get; set; }
+        public double longitude { get; set; }
 
         public DateTime Created { get; set; }
 

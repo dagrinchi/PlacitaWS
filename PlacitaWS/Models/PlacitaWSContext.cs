@@ -26,6 +26,10 @@ namespace PlacitaWS.Models
         public System.Data.Entity.DbSet<PlacitaWS.Models.Product> Products { get; set; }
 
         public System.Data.Entity.DbSet<PlacitaWS.Models.Unit> Units { get; set; }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.Price> Prices { get; set; }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.GeoPoint> GeoPoints { get; set; }
     
     }
 }
