@@ -13,44 +13,44 @@ using PlacitaWS.Models;
 
 namespace PlacitaWS.Controllers
 {
-    public class ProductsController : ApiController
+    public class NewsFeedsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Products
-        public IQueryable<Product> GetProducts()
+        // GET: api/NewsFeeds
+        public IQueryable<NewsFeed> GetNewsFeeds()
         {
-            return db.Products;
+            return db.NewsFeeds;
         }
 
-        // GET: api/Products/5
-        [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> GetProduct(int id)
+        // GET: api/NewsFeeds/5
+        [ResponseType(typeof(NewsFeed))]
+        public async Task<IHttpActionResult> GetNewsFeed(int id)
         {
-            Product product = await db.Products.FindAsync(id);
-            if (product == null)
+            NewsFeed newsFeed = await db.NewsFeeds.FindAsync(id);
+            if (newsFeed == null)
             {
                 return NotFound();
             }
 
-            return Ok(product);
+            return Ok(newsFeed);
         }
 
-        // PUT: api/Products/5
+        // PUT: api/NewsFeeds/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProduct(int id, Product product)
+        public async Task<IHttpActionResult> PutNewsFeed(int id, NewsFeed newsFeed)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != product.Id)
+            if (id != newsFeed.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(product).State = EntityState.Modified;
+            db.Entry(newsFeed).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace PlacitaWS.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!NewsFeedExists(id))
                 {
                     return NotFound();
                 }
@@ -71,35 +71,35 @@ namespace PlacitaWS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Products
-        [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> PostProduct(Product product)
+        // POST: api/NewsFeeds
+        [ResponseType(typeof(NewsFeed))]
+        public async Task<IHttpActionResult> PostNewsFeed(NewsFeed newsFeed)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Products.Add(product);
+            db.NewsFeeds.Add(newsFeed);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = product.Id }, product);
+            return CreatedAtRoute("DefaultApi", new { id = newsFeed.Id }, newsFeed);
         }
 
-        // DELETE: api/Products/5
-        [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> DeleteProduct(int id)
+        // DELETE: api/NewsFeeds/5
+        [ResponseType(typeof(NewsFeed))]
+        public async Task<IHttpActionResult> DeleteNewsFeed(int id)
         {
-            Product product = await db.Products.FindAsync(id);
-            if (product == null)
+            NewsFeed newsFeed = await db.NewsFeeds.FindAsync(id);
+            if (newsFeed == null)
             {
                 return NotFound();
             }
 
-            db.Products.Remove(product);
+            db.NewsFeeds.Remove(newsFeed);
             await db.SaveChangesAsync();
 
-            return Ok(product);
+            return Ok(newsFeed);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +111,9 @@ namespace PlacitaWS.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ProductExists(int id)
+        private bool NewsFeedExists(int id)
         {
-            return db.Products.Count(e => e.Id == id) > 0;
+            return db.NewsFeeds.Count(e => e.Id == id) > 0;
         }
     }
 }

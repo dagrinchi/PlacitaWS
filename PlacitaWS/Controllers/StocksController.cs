@@ -15,7 +15,7 @@ namespace PlacitaWS.Controllers
 {
     public class StocksController : ApiController
     {
-        private PlacitaWSContext db = new PlacitaWSContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Stocks
         public IQueryable<Stock> GetStocks()

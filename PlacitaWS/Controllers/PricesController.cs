@@ -15,7 +15,7 @@ namespace PlacitaWS.Controllers
 {
     public class PricesController : ApiController
     {
-        private PlacitaWSContext db = new PlacitaWSContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Prices
         public IQueryable<Price> GetPrices()

@@ -30,5 +30,17 @@ namespace PlacitaWS.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.Unit> Units { get; set; }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.Stock> Stocks { get; set; }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.Price> Prices { get; set; }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.Order> Orders { get; set; }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.NewsFeed> NewsFeeds { get; set; }
     }
 }

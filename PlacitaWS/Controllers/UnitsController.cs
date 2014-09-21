@@ -15,7 +15,7 @@ namespace PlacitaWS.Controllers
 {
     public class UnitsController : ApiController
     {
-        private PlacitaWSContext db = new PlacitaWSContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Units
         public IQueryable<Unit> GetUnits()

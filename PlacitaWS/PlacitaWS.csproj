@@ -219,8 +219,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\GeoPointsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NewsFeedsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -229,17 +229,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201409162218148_Initial.cs" />
-    <Compile Include="Migrations\201409162218148_Initial.Designer.cs">
-      <DependentUpon>201409162218148_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201409140641435_InitialCreate.cs" />
+    <Compile Include="Migrations\201409140641435_InitialCreate.Designer.cs">
+      <DependentUpon>201409140641435_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409212224374_Init.cs" />
+    <Compile Include="Migrations\201409212224374_Init.Designer.cs">
+      <DependentUpon>201409212224374_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GeoPoint.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\NewsFeed.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\PlacitaWSContext.cs" />
     <Compile Include="Models\Price.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Stock.cs" />
@@ -319,8 +323,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201409162218148_Initial.resx">
-      <DependentUpon>201409162218148_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201409140641435_InitialCreate.resx">
+      <DependentUpon>201409140641435_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409212224374_Init.resx">
+      <DependentUpon>201409212224374_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
