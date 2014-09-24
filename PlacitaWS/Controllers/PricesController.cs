@@ -13,17 +13,20 @@ using PlacitaWS.Models;
 
 namespace PlacitaWS.Controllers
 {
+    [Authorize]
     public class PricesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Prices
+        [AllowAnonymous]
         public IQueryable<Price> GetPrices()
         {
             return db.Prices;
         }
 
         // GET: api/Prices/5
+        [AllowAnonymous]
         [ResponseType(typeof(Price))]
         public async Task<IHttpActionResult> GetPrice(int id)
         {

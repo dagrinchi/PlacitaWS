@@ -13,7 +13,7 @@ namespace PlacitaWS.Models
 
         public String Body { get; set; }
 
-        public User Author { get; set; }
+        public ApplicationUser Author { get; set; }
 
         public DateTime Created { get; set; }
 

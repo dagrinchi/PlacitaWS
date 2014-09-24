@@ -35,6 +35,15 @@ namespace PlacitaWS.Models
     public class RegisterBindingModel
     {
         [Required]
+        [Display(Name = "Full Name")]
+        public String Name { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone")]
+        public String Phone { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

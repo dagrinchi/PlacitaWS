@@ -11,19 +11,38 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PlacitaWS.Models;
 
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+
 namespace PlacitaWS.Controllers
 {
+    [Authorize]
     public class StocksController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Stocks
-        public IQueryable<Stock> GetStocks()
-        {
-            return db.Stocks;
+        private UserManager<ApplicationUser> _userManager;
+
+        public StocksController() {
+            _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
+        // GET: api/Stocks
+        [AllowAnonymous]
+        public IQueryable<Stock> GetStocks()
+        {
+            return db.Stocks
+                .Include("Product")
+                .Include("Unit")
+                .Include("GeoPoint")
+                .Include("User")
+                .Include("User.User");
+        }
+
+
         // GET: api/Stocks/5
+        [AllowAnonymous]
         [ResponseType(typeof(Stock))]
         public async Task<IHttpActionResult> GetStock(int id)
         {
@@ -36,49 +55,30 @@ namespace PlacitaWS.Controllers
             return Ok(stock);
         }
 
-        // PUT: api/Stocks/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStock(int id, Stock stock)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != stock.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(stock).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
         // POST: api/Stocks
         [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> PostStock(Stock stock)
+        public async Task<IHttpActionResult> PostStock(StockBinding stockModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            ApplicationUser appuser = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+            var stock = new Stock()
+            {
+                Product = await db.Products.FindAsync(stockModel.ProductId),
+                Unit = await db.Units.FindAsync(stockModel.UnitId),
+                PricePerUnit = stockModel.PricePerUnit,
+                ExpiresAt = stockModel.ExpiresAt,
+                Qty = stockModel.Qty,
+                GeoPoint = new GeoPoint()
+                {
+                    Latitude = stockModel.GeoPoint.Latitude,
+                    Longitude = stockModel.GeoPoint.Longitude
+                },
+                User = appuser
+            };
 
             db.Stocks.Add(stock);
             await db.SaveChangesAsync();

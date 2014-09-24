@@ -13,7 +13,7 @@ namespace PlacitaWS.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201409212224374_Init"; }
+            get { return "201409220646204_Init"; }
         }
         
         string IMigrationMetadata.Source

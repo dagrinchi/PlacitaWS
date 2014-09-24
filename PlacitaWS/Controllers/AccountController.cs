@@ -330,7 +330,15 @@ namespace PlacitaWS.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { 
+                UserName = model.Email, 
+                Email = model.Email, 
+                User = new User() { 
+                    Name = model.Name,
+                    Phone = model.Phone,
+                    Created = DateTime.Now,
+                    Updated = DateTime.Now
+                }};
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

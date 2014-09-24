@@ -7,6 +7,12 @@ namespace PlacitaWS.Models
 {
     public class Price
     {
+        public Price()
+        {
+            Created = DateTime.Now;
+            Updated = DateTime.Now;
+        }
+
         public int Id { get; set; }
 
         public Product Product { get; set; }

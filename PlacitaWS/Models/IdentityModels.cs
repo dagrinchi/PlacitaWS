@@ -4,11 +4,20 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+
 namespace PlacitaWS.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    
+    [DataContract]
     public class ApplicationUser : IdentityUser
     {
+        [DataMember]
+        public override string Email { get; set; }
+        
+        [DataMember]
         public User User { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
