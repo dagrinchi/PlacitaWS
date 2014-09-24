@@ -223,6 +223,7 @@
     <Compile Include="Controllers\MyStocksController.cs" />
     <Compile Include="Controllers\NewsFeedsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\NewsFeed.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Place.cs" />
     <Compile Include="Models\Price.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Stock.cs" />
