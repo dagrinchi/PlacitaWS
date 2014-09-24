@@ -24,7 +24,8 @@ namespace PlacitaWS.Controllers
 
         private UserManager<ApplicationUser> _userManager;
 
-        public StocksController() {
+        public StocksController()
+        {
             _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
@@ -37,7 +38,37 @@ namespace PlacitaWS.Controllers
                 .Include("Unit")
                 .Include("GeoPoint")
                 .Include("User")
-                .Include("User.User");
+                .Include("User.User")
+                .Where(s => s.ExpiresAt >= DateTime.Now);
+        }
+
+        // GET: api/MyStocks
+        [Route("api/MyStocks/{hasExpired}")]
+        public IQueryable<Stock> GetMyStocks(int hasExpired)
+        {
+            ApplicationUser appuser = _userManager.FindById(User.Identity.GetUserId());
+            if (hasExpired == 0)
+            {
+                return db.Stocks
+                    .Include("Product")
+                    .Include("Unit")
+                    .Include("GeoPoint")
+                    .Include("User")
+                    .Include("User.User")
+                    .Where(s => s.User.Id == appuser.Id)
+                    .Where(s => s.ExpiresAt >= DateTime.Now);
+            }
+            else
+            {
+                return db.Stocks
+                    .Include("Product")
+                    .Include("Unit")
+                    .Include("GeoPoint")
+                    .Include("User")
+                    .Include("User.User")
+                    .Where(s => s.User.Id == appuser.Id)
+                    .Where(s => s.ExpiresAt <= DateTime.Now);
+            }
         }
 
 

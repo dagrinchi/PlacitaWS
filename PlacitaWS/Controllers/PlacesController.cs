@@ -12,6 +12,7 @@ using PlacitaWS.Models;
 
 namespace PlacitaWS.Controllers
 {
+    [Authorize]
     public class PlacesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

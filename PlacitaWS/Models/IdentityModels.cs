@@ -53,5 +53,9 @@ namespace PlacitaWS.Models
         public System.Data.Entity.DbSet<PlacitaWS.Models.NewsFeed> NewsFeeds { get; set; }
 
         public System.Data.Entity.DbSet<PlacitaWS.Models.Place> Places { get; set; }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.OrderStatus> OrderStatus { get; set; }
+
+        public System.Data.Entity.DbSet<PlacitaWS.Models.OrderDelivered> OrderDelivereds { get; set; }
     }
 }

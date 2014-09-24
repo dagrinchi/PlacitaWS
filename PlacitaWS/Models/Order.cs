@@ -17,11 +17,13 @@ namespace PlacitaWS.Models
 
         public int Id { get; set; }
 
-        public Stock Stock { get; set; } 
+        public Stock Stock { get; set; }
+
+        public string FullName { get; set; }
+
+        public string Phone { get; set; }
 
         public double Qty { get; set; }
-
-        public double PricePerUnit { get; set; }
 
         public GeoPoint GeoPoint { get; set; }
 
@@ -37,10 +39,14 @@ namespace PlacitaWS.Models
         public int StockId { get; set; }
         
         [Required]
-        public double Qty { get; set; }
+        public string FullName { get; set; }
 
         [Required]
-        public double PricePerUnit { get; set; }
+        [DataType(DataType.PhoneNumber)]
+        public string Phone { get; set; }
+        
+        [Required]
+        public double Qty { get; set; }
 
         [Required]
         public GeoPoint GeoPoint { get; set; }

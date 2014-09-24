@@ -18,51 +18,51 @@ using Microsoft.AspNet.Identity.Owin;
 namespace PlacitaWS.Controllers
 {
     [Authorize]
-    public class OrdersController : ApiController
+    public class OrderDeliveredsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         private UserManager<ApplicationUser> _userManager;
 
-        public OrdersController()
+        public OrderDeliveredsController()
         {
             _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
-        // GET: api/Orders
-        public IQueryable<Order> GetOrders()
+        // GET: api/OrderDelivereds
+        public IQueryable<OrderDelivered> GetOrderDelivereds()
         {
-            return db.Orders;
+            return db.OrderDelivereds;
         }
 
-        // GET: api/Orders/5
-        [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> GetOrder(int id)
+        // GET: api/OrderDelivereds/5
+        [ResponseType(typeof(OrderDelivered))]
+        public async Task<IHttpActionResult> GetOrderDelivered(int id)
         {
-            Order order = await db.Orders.FindAsync(id);
-            if (order == null)
+            OrderDelivered orderDelivered = await db.OrderDelivereds.FindAsync(id);
+            if (orderDelivered == null)
             {
                 return NotFound();
             }
 
-            return Ok(order);
+            return Ok(orderDelivered);
         }
 
-        // PUT: api/Orders/5
+        // PUT: api/OrderDelivereds/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutOrder(int id, Order order)
+        public async Task<IHttpActionResult> PutOrderDelivered(int id, OrderDelivered orderDelivered)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != order.Id)
+            if (id != orderDelivered.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(order).State = EntityState.Modified;
+            db.Entry(orderDelivered).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +70,7 @@ namespace PlacitaWS.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
+                if (!OrderDeliveredExists(id))
                 {
                     return NotFound();
                 }
@@ -83,50 +83,44 @@ namespace PlacitaWS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Orders
-        [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> PostOrder(OrderBinding orderModel)
+        // POST: api/OrderDelivereds
+        [ResponseType(typeof(OrderDelivered))]
+        public async Task<IHttpActionResult> PostOrderDelivered(OrderDeliveredBinding orderDeliveredModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            
             ApplicationUser appuser = await _userManager.FindByIdAsync(User.Identity.GetUserId());
-            var order = new Order()
+            var orderDelivered = new OrderDelivered()
             {
-                Stock = await db.Stocks.FindAsync(orderModel.StockId),
-                FullName = orderModel.FullName,
-                Phone = orderModel.Phone,
-                Qty = orderModel.Qty,
-                GeoPoint = new GeoPoint()
-                {
-                    Latitude = orderModel.GeoPoint.Latitude,
-                    Longitude = orderModel.GeoPoint.Longitude
-                },
+                OrderStatus = await db.OrderStatus.FindAsync(orderDeliveredModel.OrderStatusId),
+                Order = await db.Orders.FindAsync(orderDeliveredModel.OrderId),
+                Comment = orderDeliveredModel.Comment,
                 User = appuser
             };
 
-            db.Orders.Add(order);
+            db.OrderDelivereds.Add(orderDelivered);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
+            return CreatedAtRoute("DefaultApi", new { id = orderDelivered.Id }, orderDelivered);
         }
 
-        // DELETE: api/Orders/5
-        [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> DeleteOrder(int id)
+        // DELETE: api/OrderDelivereds/5
+        [ResponseType(typeof(OrderDelivered))]
+        public async Task<IHttpActionResult> DeleteOrderDelivered(int id)
         {
-            Order order = await db.Orders.FindAsync(id);
-            if (order == null)
+            OrderDelivered orderDelivered = await db.OrderDelivereds.FindAsync(id);
+            if (orderDelivered == null)
             {
                 return NotFound();
             }
 
-            db.Orders.Remove(order);
+            db.OrderDelivereds.Remove(orderDelivered);
             await db.SaveChangesAsync();
 
-            return Ok(order);
+            return Ok(orderDelivered);
         }
 
         protected override void Dispose(bool disposing)
@@ -138,9 +132,9 @@ namespace PlacitaWS.Controllers
             base.Dispose(disposing);
         }
 
-        private bool OrderExists(int id)
+        private bool OrderDeliveredExists(int id)
         {
-            return db.Orders.Count(e => e.Id == id) > 0;
+            return db.OrderDelivereds.Count(e => e.Id == id) > 0;
         }
     }
 }

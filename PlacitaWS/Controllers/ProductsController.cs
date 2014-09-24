@@ -13,6 +13,7 @@ using PlacitaWS.Models;
 
 namespace PlacitaWS.Controllers
 {
+    [Authorize]
     public class ProductsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -15,6 +15,13 @@ namespace PlacitaWS.Migrations
 
         protected override void Seed(PlacitaWS.Models.ApplicationDbContext context)
         {
+            context.OrderStatus.AddOrUpdate(
+                os => os.Status,
+                new OrderStatus { Status = "Producto vencido / defectuso" },
+                new OrderStatus { Status = "No se concretó la venta" },
+                new OrderStatus { Status = "Producto entregado a satisfacción" }
+            );
+
             context.Units.AddOrUpdate(
                 u => u.Code,
                 new Unit { Code = "UND", Name = "Unidad" },

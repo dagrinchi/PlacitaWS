@@ -21,7 +21,6 @@ namespace PlacitaWS.Models
         [DataType(DataType.PhoneNumber)]
         public String Phone { get; set; }
 
-        [DataMember]
         public DateTime Created { get; set; }
 
         public DateTime Updated { get; set; }

@@ -14,44 +14,44 @@ using PlacitaWS.Models;
 namespace PlacitaWS.Controllers
 {
     [Authorize]
-    public class UnitsController : ApiController
+    public class OrderStatusController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Units
-        public IQueryable<Unit> GetUnits()
+        // GET: api/OrderStatus
+        public IQueryable<OrderStatus> GetOrderStatus()
         {
-            return db.Units;
+            return db.OrderStatus;
         }
 
-        // GET: api/Units/5
-        [ResponseType(typeof(Unit))]
-        public async Task<IHttpActionResult> GetUnit(int id)
+        // GET: api/OrderStatus/5
+        [ResponseType(typeof(OrderStatus))]
+        public async Task<IHttpActionResult> GetOrderStatus(int id)
         {
-            Unit unit = await db.Units.FindAsync(id);
-            if (unit == null)
+            OrderStatus orderStatus = await db.OrderStatus.FindAsync(id);
+            if (orderStatus == null)
             {
                 return NotFound();
             }
 
-            return Ok(unit);
+            return Ok(orderStatus);
         }
 
-        // PUT: api/Units/5
+        // PUT: api/OrderStatus/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUnit(int id, Unit unit)
+        public async Task<IHttpActionResult> PutOrderStatus(int id, OrderStatus orderStatus)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != unit.Id)
+            if (id != orderStatus.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(unit).State = EntityState.Modified;
+            db.Entry(orderStatus).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace PlacitaWS.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UnitExists(id))
+                if (!OrderStatusExists(id))
                 {
                     return NotFound();
                 }
@@ -72,35 +72,35 @@ namespace PlacitaWS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Units
-        [ResponseType(typeof(Unit))]
-        public async Task<IHttpActionResult> PostUnit(Unit unit)
+        // POST: api/OrderStatus
+        [ResponseType(typeof(OrderStatus))]
+        public async Task<IHttpActionResult> PostOrderStatus(OrderStatus orderStatus)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Units.Add(unit);
+            db.OrderStatus.Add(orderStatus);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = unit.Id }, unit);
+            return CreatedAtRoute("DefaultApi", new { id = orderStatus.Id }, orderStatus);
         }
 
-        // DELETE: api/Units/5
-        [ResponseType(typeof(Unit))]
-        public async Task<IHttpActionResult> DeleteUnit(int id)
+        // DELETE: api/OrderStatus/5
+        [ResponseType(typeof(OrderStatus))]
+        public async Task<IHttpActionResult> DeleteOrderStatus(int id)
         {
-            Unit unit = await db.Units.FindAsync(id);
-            if (unit == null)
+            OrderStatus orderStatus = await db.OrderStatus.FindAsync(id);
+            if (orderStatus == null)
             {
                 return NotFound();
             }
 
-            db.Units.Remove(unit);
+            db.OrderStatus.Remove(orderStatus);
             await db.SaveChangesAsync();
 
-            return Ok(unit);
+            return Ok(orderStatus);
         }
 
         protected override void Dispose(bool disposing)
@@ -112,9 +112,9 @@ namespace PlacitaWS.Controllers
             base.Dispose(disposing);
         }
 
-        private bool UnitExists(int id)
+        private bool OrderStatusExists(int id)
         {
-            return db.Units.Count(e => e.Id == id) > 0;
+            return db.OrderStatus.Count(e => e.Id == id) > 0;
         }
     }
 }
