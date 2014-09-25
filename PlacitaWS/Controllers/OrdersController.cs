@@ -35,6 +35,23 @@ namespace PlacitaWS.Controllers
             return db.Orders;
         }
 
+        [Route("api/MyOrders")]
+        public IQueryable<Order> GetMyOrders()
+        {
+            ApplicationUser appuser = _userManager.FindById(User.Identity.GetUserId());
+            return ((from o in db.Orders
+                   join s in db.Stocks on o.Stock.Id equals s.Id
+                   where s.User.Id == appuser.Id
+                   select o) as IQueryable<Order>)
+                        .Include("Stock")
+                        .Include("Stock.Product")
+                        .Include("Stock.Unit")
+                        .Include("Stock.GeoPoint")
+                        .Include("Stock.User.User")
+                        .Include("GeoPoint")
+                        .Include("User.User");
+        }
+
         // GET: api/Orders/5
         [ResponseType(typeof(Order))]
         public async Task<IHttpActionResult> GetOrder(int id)
