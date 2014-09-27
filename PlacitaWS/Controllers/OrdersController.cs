@@ -28,11 +28,21 @@ namespace PlacitaWS.Controllers
         {
             _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
-
-        // GET: api/Orders
-        public IQueryable<Order> GetOrders()
+        
+        [Route("api/MyPurchases")]
+        public IQueryable<Order> GetMyPurchases()
         {
-            return db.Orders;
+            ApplicationUser appuser = _userManager.FindById(User.Identity.GetUserId());
+            return ((from o in db.Orders
+                     where o.User.Id == appuser.Id
+                     select o) as IQueryable<Order>)
+                        .Include("Stock")
+                        .Include("Stock.Product")
+                        .Include("Stock.Unit")
+                        .Include("Stock.GeoPoint")
+                        .Include("Stock.User.User")
+                        .Include("GeoPoint")
+                        .Include("User.User");
         }
 
         [Route("api/MyOrders")]

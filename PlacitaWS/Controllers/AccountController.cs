@@ -336,6 +336,7 @@ namespace PlacitaWS.Controllers
                 User = new User() { 
                     Name = model.Name,
                     Phone = model.Phone,
+                    Address = model.Address,
                     Created = DateTime.Now,
                     Updated = DateTime.Now
                 }};

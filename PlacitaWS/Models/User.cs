@@ -21,6 +21,10 @@ namespace PlacitaWS.Models
         [DataType(DataType.PhoneNumber)]
         public String Phone { get; set; }
 
+        [Required]
+        [DataType(DataType.Text)]
+        public String Address { get; set; }
+
         public DateTime Created { get; set; }
 
         public DateTime Updated { get; set; }

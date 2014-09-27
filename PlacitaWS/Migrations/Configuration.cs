@@ -17,9 +17,11 @@ namespace PlacitaWS.Migrations
         {
             context.OrderStatus.AddOrUpdate(
                 os => os.Status,
-                new OrderStatus { Status = "Producto vencido / defectuso" },
-                new OrderStatus { Status = "No se concretó la venta" },
-                new OrderStatus { Status = "Producto entregado a satisfacción" }
+                new OrderStatus { Status = "CONTACTO", Farmer = false, Buyer = false, Color = "#0198e1" },
+                new OrderStatus { Status = "TRASPORTE", Farmer = true, Buyer = false, Color = "#ff8600"},
+                new OrderStatus { Status = "ENTREGADO", Farmer = true, Buyer = true, Color = "#37bc61" },
+                new OrderStatus { Status = "CANCELADO", Farmer = true, Buyer = true, Color = "#cd3700" },
+                new OrderStatus { Status = "PRODUCTO DEFECTUOSO", Farmer = false, Buyer = true, Color = "#8b8682"}
             );
 
             context.Units.AddOrUpdate(

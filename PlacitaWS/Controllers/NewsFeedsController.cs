@@ -11,16 +11,28 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PlacitaWS.Models;
 
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+
 namespace PlacitaWS.Controllers
 {
+
     public class NewsFeedsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        
+        private UserManager<ApplicationUser> _userManager;
+
+        public NewsFeedsController()
+        {
+            _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+        }
 
         // GET: api/NewsFeeds
         public IQueryable<NewsFeed> GetNewsFeeds()
         {
-            return db.NewsFeeds;
+            return db.NewsFeeds.Include("Author");
         }
 
         // GET: api/NewsFeeds/5
@@ -73,12 +85,20 @@ namespace PlacitaWS.Controllers
 
         // POST: api/NewsFeeds
         [ResponseType(typeof(NewsFeed))]
-        public async Task<IHttpActionResult> PostNewsFeed(NewsFeed newsFeed)
+        public async Task<IHttpActionResult> PostNewsFeed(NewsFeedBinding newsFeedModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            ApplicationUser appuser = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+            var newsFeed = new NewsFeed()
+            {
+                Title = newsFeedModel.Title,
+                Body = newsFeedModel.Body,
+                Author = appuser
+            };
 
             db.NewsFeeds.Add(newsFeed);
             await db.SaveChangesAsync();

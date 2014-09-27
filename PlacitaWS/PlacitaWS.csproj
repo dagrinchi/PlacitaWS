@@ -244,6 +244,10 @@
     <Compile Include="Migrations\201409240712360_OrderDelivered.Designer.cs">
       <DependentUpon>201409240712360_OrderDelivered.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409270105558_OrderStatusCF.cs" />
+    <Compile Include="Migrations\201409270105558_OrderStatusCF.Designer.cs">
+      <DependentUpon>201409270105558_OrderStatusCF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -345,6 +349,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409240712360_OrderDelivered.resx">
       <DependentUpon>201409240712360_OrderDelivered.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409270105558_OrderStatusCF.resx">
+      <DependentUpon>201409270105558_OrderStatusCF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

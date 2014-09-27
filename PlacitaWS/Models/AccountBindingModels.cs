@@ -44,6 +44,11 @@ namespace PlacitaWS.Models
         public String Phone { get; set; }
 
         [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Address")]
+        public String Address { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
