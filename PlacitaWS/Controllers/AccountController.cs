@@ -331,10 +331,11 @@ namespace PlacitaWS.Controllers
             }
 
             var user = new ApplicationUser() { 
-                UserName = model.Email, 
+                UserName = model.Identification, 
                 Email = model.Email, 
                 User = new User() { 
                     Name = model.Name,
+                    Identification = model.Identification,
                     Phone = model.Phone,
                     Address = model.Address,
                     Created = DateTime.Now,

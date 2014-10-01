@@ -18,6 +18,10 @@ namespace PlacitaWS.Models
 
         [DataMember]
         [Required]
+        public String Identification { get; set; }
+
+        [DataMember]
+        [Required]
         [DataType(DataType.PhoneNumber)]
         public String Phone { get; set; }
 

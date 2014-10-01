@@ -252,6 +252,10 @@
     <Compile Include="Migrations\201409270105558_OrderStatusCF.Designer.cs">
       <DependentUpon>201409270105558_OrderStatusCF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410010054216_IdentificationField.cs" />
+    <Compile Include="Migrations\201410010054216_IdentificationField.Designer.cs">
+      <DependentUpon>201410010054216_IdentificationField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -375,6 +379,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409270105558_OrderStatusCF.resx">
       <DependentUpon>201409270105558_OrderStatusCF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410010054216_IdentificationField.resx">
+      <DependentUpon>201410010054216_IdentificationField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
