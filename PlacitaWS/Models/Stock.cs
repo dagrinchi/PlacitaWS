@@ -36,19 +36,45 @@ namespace PlacitaWS.Models
         public DateTime Updated { get; set; }
     }
 
+    public class USSDStockBinding
+    {
+        [Required]
+        public string ProductCode { get; set; }
+        
+        [Required]
+        public string UnitCode { get; set; }
+        
+        [Required]
+        public double Qty { get; set; }
+        
+        [Required]
+        public double PricePerUnit { get; set; }
+        
+        [Required]
+        public double ExpiresDays { get; set; }
+
+        [Required]
+        public string LocationCode { get; set; }
+    }
+
     public class StockBinding
     {
         [Required]
         public int ProductId { get; set; }
+        
         [Required]
         public int UnitId { get; set; }
+        
         [Required]
         public double Qty { get; set; }
+        
         [Required]
         public double PricePerUnit { get; set; }
+        
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime ExpiresAt { get; set; }
+        
         [Required]
         public GeoPointBinding GeoPoint { get; set; }
     }

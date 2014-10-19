@@ -23,6 +23,14 @@ namespace PlacitaWS.Models
         [DataMember]
         public double Longitude { get; set; }
 
+        public string Address { get; set; }
+
+        public string Town { get; set; }
+
+        public string State { get; set; }
+
+        public string Country { get; set; }
+
         public DateTime Created { get; set; }
 
         public DateTime Updated { get; set; }
@@ -32,8 +40,20 @@ namespace PlacitaWS.Models
     {
         [Required]
         public double Latitude { get; set; }
+        
         [Required]
         public double Longitude { get; set; }
+
+        public string Address { get; set; }
+
+        [Required]
+        public string Town { get; set; }
+
+        [Required]
+        public string State { get; set; }
+
+        [Required]
+        public string Country { get; set; }
 
     }
 }

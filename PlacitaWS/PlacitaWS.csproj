@@ -256,6 +256,10 @@
     <Compile Include="Migrations\201410010054216_IdentificationField.Designer.cs">
       <DependentUpon>201410010054216_IdentificationField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410082205333_NuevoGeoPoint.cs" />
+    <Compile Include="Migrations\201410082205333_NuevoGeoPoint.Designer.cs">
+      <DependentUpon>201410082205333_NuevoGeoPoint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -298,6 +302,7 @@
     <Content Include="App_Data\DefaultConnection_log.ldf">
       <DependentUpon>DefaultConnection.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\SqlScript_InitDatabase.sql" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -382,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201410010054216_IdentificationField.resx">
       <DependentUpon>201410010054216_IdentificationField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410082205333_NuevoGeoPoint.resx">
+      <DependentUpon>201410082205333_NuevoGeoPoint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

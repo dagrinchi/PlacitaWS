@@ -19,9 +19,13 @@ namespace PlacitaWS.Models
 
         public Unit Unit { get; set; }
 
-        public double PricePerUnit { get; set; }
+        public double PriceMaxPerUnit { get; set; }
 
-        public GeoPoint GeoPoint { get; set; }
+        public double PriceMinPerUnit { get; set; }
+
+        public double PriceAvgPerUnit { get; set; }
+
+        public string Location { get; set; }
 
         public DateTime Created { get; set; }
 

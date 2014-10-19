@@ -22,7 +22,7 @@ namespace PlacitaWS.Controllers
         [AllowAnonymous]
         public IQueryable<Price> GetPrices()
         {
-            return db.Prices;
+            return db.Prices.Include("Product").Include("Unit");
         }
 
         // GET: api/Prices/5
@@ -30,13 +30,33 @@ namespace PlacitaWS.Controllers
         [ResponseType(typeof(Price))]
         public async Task<IHttpActionResult> GetPrice(int id)
         {
-            Price price = await db.Prices.FindAsync(id);
+            //Price price = await db.Prices.FindAsync(id);
+            Price price = await ((from p in db.Prices
+                           where p.Id == id
+                           select p) as IQueryable<Price>)
+                           .Include("Unit")
+                           .Include("Product")
+                           .SingleAsync();
             if (price == null)
             {
                 return NotFound();
             }
 
             return Ok(price);
+        }
+
+        // GET: api/PricesByProductCode/11
+        [AllowAnonymous]
+        [Route("api/PriceByProductCode/{productCode}")]
+        public IQueryable<Price> GetPriceByProductCode(String productCode)
+        {
+            return ((from p in db.Prices
+                   where p.Product.Code == productCode
+                   orderby p.Created descending
+                   select p) as IQueryable<Price>)
+                   .Take(5)
+                   .Include("Product")
+                   .Include("Unit");
         }
 
         // PUT: api/Prices/5
