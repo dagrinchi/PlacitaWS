@@ -129,7 +129,11 @@ namespace PlacitaWS.Controllers
                 GeoPoint = new GeoPoint()
                 {
                     Latitude = orderModel.GeoPoint.Latitude,
-                    Longitude = orderModel.GeoPoint.Longitude
+                    Longitude = orderModel.GeoPoint.Longitude,
+                    Address = orderModel.GeoPoint.Address,
+                    Town = orderModel.GeoPoint.Town,
+                    State = orderModel.GeoPoint.State,
+                    Country = orderModel.GeoPoint.Country
                 },
                 User = appuser
             };

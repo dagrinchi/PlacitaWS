@@ -23,12 +23,16 @@ namespace PlacitaWS.Models
         [DataMember]
         public double Longitude { get; set; }
 
+        [DataMember]
         public string Address { get; set; }
 
+        [DataMember]
         public string Town { get; set; }
 
+        [DataMember]
         public string State { get; set; }
 
+        [DataMember]
         public string Country { get; set; }
 
         public DateTime Created { get; set; }

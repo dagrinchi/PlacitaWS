@@ -17,6 +17,8 @@ namespace PlacitaWS.Models
             Created = DateTime.Now;
             Updated = DateTime.Now;
         }
+        
+        [DataMember]
         public int Id { get; set; }
 
         [DataMember]

@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -323,6 +324,7 @@ namespace PlacitaWS.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
+        [ResponseType(typeof(ApplicationUser))]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -349,7 +351,7 @@ namespace PlacitaWS.Controllers
                 return GetErrorResult(result);
             }
 
-            return Ok();
+            return Ok(user);
         }
 
         // POST api/Account/RegisterExternal
@@ -415,7 +417,7 @@ namespace PlacitaWS.Controllers
                 {
                     foreach (string error in result.Errors)
                     {
-                        ModelState.AddModelError("", error);
+                        ModelState.AddModelError("Account", error);
                     }
                 }
 
