@@ -65,9 +65,20 @@ namespace PlacitaWS.Controllers
 
         // GET: api/Orders/5
         [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> GetOrder(int id)
+        public IHttpActionResult GetOrder(int id)
         {
-            Order order = await db.Orders.FindAsync(id);
+            ApplicationUser appuser = _userManager.FindById(User.Identity.GetUserId());
+            Order order = ((from o in db.Orders
+                                     where o.Id == id
+                                     && o.User.Id == appuser.Id
+                            select o) as IQueryable<Order>)
+                        .Include("Stock")
+                        .Include("Stock.Product")
+                        .Include("Stock.Unit")
+                        .Include("Stock.GeoPoint")
+                        .Include("Stock.User.User")
+                        .Include("GeoPoint")
+                        .Include("User.User").FirstOrDefault();
             if (order == null)
             {
                 return NotFound();
