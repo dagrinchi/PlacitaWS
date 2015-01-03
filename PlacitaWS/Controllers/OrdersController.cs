@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.IO;
 using PlacitaWS.Models;
 
 using Microsoft.AspNet.Identity;
@@ -112,17 +113,24 @@ namespace PlacitaWS.Controllers
 
         // POST: api/Orders
         [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> PostOrder(OrderBinding orderModel)
+        public IHttpActionResult PostOrder(OrderBinding orderModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            ApplicationUser appuser = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+            ApplicationUser appuser = _userManager.FindById(User.Identity.GetUserId());
+            Stock stock = db.Stocks              
+                .Include("Product")
+                .Include("Unit")
+                .Include("User")
+                .Include("User.User")
+                .Where(st => st.Id == orderModel.StockId).FirstOrDefault();
+
             var order = new Order()
             {
-                Stock = await db.Stocks.FindAsync(orderModel.StockId),
+                Stock = stock,
                 FullName = orderModel.FullName,
                 Phone = orderModel.Phone,
                 Qty = orderModel.Qty,
@@ -137,11 +145,107 @@ namespace PlacitaWS.Controllers
                 },
                 User = appuser
             };
-
             db.Orders.Add(order);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
+
+            string sms1 = "http://200.31.80.34/Bolsa_Mensajes/AgroNet/CGI/ReceiverSMSFormulario.php";
+            sms1 += "?to=85050";
+            sms1 += String.Format("&operador={0}", GetOperator(stock.User.User.Phone));                        
+            sms1 += String.Format("&mensaje=Buenas_Tienes_un_nuevo_pedido_Ref_{0}_de_{1}_{2}_de_{3}_por_{4}_{5}",
+                order.Id,
+                order.Qty, 
+                stock.Unit.Code,
+                System.Text.RegularExpressions.Regex.Replace(stock.Product.Name.Trim(), @"\s+", "_"),
+                System.Text.RegularExpressions.Regex.Replace(order.FullName.Trim(), @"\s+", "_"),
+                order.Phone);
+            sms1 += String.Format("&movil={0}", stock.User.User.Phone);
+            sms1 += "&idmessage=11111111";
+            sms1 += "&concat=0";
+            SendSMS(sms1);
+
+            string sms2 = "http://200.31.80.34/Bolsa_Mensajes/AgroNet/CGI/ReceiverSMSFormulario.php";
+            sms2 += "?to=85050";
+            sms2 += String.Format("&operador=", order.Phone);
+            sms2 += String.Format("&mensaje=Buenas_Tu_pedido_de_{0}_{1}_de_{2}_Ref_{3}_fue_creado_exitosamente_Puede_comunicarse_con_{4}_{5}",
+                order.Qty,
+                stock.Unit.Code,
+                System.Text.RegularExpressions.Regex.Replace(stock.Product.Name.Trim(), @"\s+", "_"), 
+                order.Id,
+                System.Text.RegularExpressions.Regex.Replace(stock.User.User.Name.Trim(), @"\s+", "_"), 
+                stock.User.User.Phone);
+            sms2 += String.Format("&movil={0}", order.Phone);
+            sms2 += "&idmessage=11111111";
+            sms2 += "&concat=0";
+            SendSMS(sms2);
 
             return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
+        }
+
+        void SendSMS(string url)
+        {
+            WebRequest request = WebRequest.Create(url);
+            WebResponse response = request.GetResponse();
+            
+            Console.WriteLine (((HttpWebResponse)response).StatusDescription);
+            Stream dataStream = response.GetResponseStream ();
+            StreamReader reader = new StreamReader (dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            Console.WriteLine (responseFromServer);
+            
+            reader.Close();
+            response.Close();
+        }
+
+        string GetOperator(string phone)
+        {
+            string operador = "1";
+            switch (phone.Substring(0, 3))
+            {
+                case "300":
+                    operador += "3";
+                    break;
+                case "301":
+                    operador += "3";
+                    break;
+                case "310":
+                    operador += "1";
+                    break;
+                case "311":
+                    operador += "1";
+                    break;
+                case "312":
+                    operador += "1";
+                    break;
+                case "313":
+                    operador += "1";
+                    break;
+                case "314":
+                    operador += "1";
+                    break;
+                case "315":
+                    operador += "2";
+                    break;
+                case "316":
+                    operador += "2";
+                    break;
+                case "317":
+                    operador += "2";
+                    break;
+                case "318":
+                    operador += "3";
+                    break;
+                case "320":
+                    operador += "1";
+                    break;
+                case "321":
+                    operador += "1";
+                    break;
+                default:
+                    operador += "1";
+                    break;
+            }
+
+            return operador;
         }
 
         // DELETE: api/Orders/5

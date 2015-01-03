@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PlacitaWS.Models;
+using System.Diagnostics;
 
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -88,32 +89,27 @@ namespace PlacitaWS.Controllers
 
         // POST: api/USSDStocks
         [Route("api/USSDStocks")]
-        public async Task<IHttpActionResult> PostUSSDStock(USSDStockBinding stockModel)
+        public IHttpActionResult PostUSSDStock(USSDStockBinding stockModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+           ApplicationUser appuser = _userManager.FindById(User.Identity.GetUserId());
+            Product product = (from pr in db.Products
+                                     where pr.Code == stockModel.ProductCode
+                                     select pr).FirstOrDefault();
+            Unit unit = (from u in db.Units
+                                where u.Code == stockModel.UnitCode
+                         select u).FirstOrDefault();  
+            Place place = (from pl in db.Places
+                                 where pl.Code == stockModel.LocationCode
+                           select pl).FirstOrDefault();
+
+            if (product == null || unit == null || place == null) {
+                return NotFound();
             }
-
-            ApplicationUser appuser = await _userManager.FindByIdAsync(User.Identity.GetUserId());
-            IQueryable<Product> product = from pr in db.Products
-                              where pr.Code == stockModel.ProductCode
-                              select pr;
-
-            IQueryable<Unit> unit = from u in db.Units
-                                    where u.Code == stockModel.UnitCode
-                                    select u;
-
-            IQueryable<Place> placeQ = from pl in db.Places
-                                      where pl.Code == stockModel.LocationCode
-                                      select pl;
-
-            Place place = placeQ.Single();
-
-            var stock = new Stock()
+            
+            Stock stock = new Stock()
             {
-                Product = product.Single(),
-                Unit = unit.Single(),
+                Product = product,
+                Unit = unit,
                 PricePerUnit = stockModel.PricePerUnit,
                 ExpiresAt = DateTime.Now.AddDays(stockModel.ExpiresDays),
                 Qty = stockModel.Qty,
@@ -121,8 +117,8 @@ namespace PlacitaWS.Controllers
                 {
                     Latitude = place.Latitude,
                     Longitude = place.Longitude,
-                    Address = "",
-                    Town = place.Name,
+                    Address = place.Name,
+                    Town = "",
                     State = "",
                     Country = ""
                 },
@@ -130,9 +126,9 @@ namespace PlacitaWS.Controllers
             };
 
             db.Stocks.Add(stock);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = stock.Id }, stock);
+            return Ok(stock);
         }
 
         // POST: api/Stocks
