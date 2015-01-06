@@ -332,7 +332,7 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <None Include="App_Data\PublishProfiles\PlacitaWS.pubxml" />
     <None Include="Properties\PublishProfiles\placita.pubxml" />
-    <None Include="Properties\PublishProfiles\PlacitaWS.pubxml" />
+    <None Include="Properties\PublishProfiles\placitatics.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
